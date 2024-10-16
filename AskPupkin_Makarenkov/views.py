@@ -1,7 +1,6 @@
-from django.http import HttpResponse, request
 from django.shortcuts import render
 
-from AskPupkin_Makarenkov.question import Question
+from AskPupkin_Makarenkov.models.question import Question
 
 
 def base(request):
@@ -10,3 +9,6 @@ def base(request):
 def index(request):
     questions = Question.get_mock_questions()
     return render(request, 'static/index.html', {'questionCards': questions})
+
+def ask(request):
+    return render(request, 'static/ask.html')

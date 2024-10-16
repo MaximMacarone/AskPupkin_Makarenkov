@@ -8,21 +8,20 @@
     {% bootstrap_javascript %}
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-body-tertiary d-flex justify-content-between" style="background-color: #172a3a;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between" style="background-color: #172a3a;">
     <div class="container-fluid">
-        <a class="navbar-brand text-light" href="#">AskPupkin</a>
+        <a class="navbar-brand text-light" href="{% url 'index' %}">AskPupkin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex mx-auto w-80" role="search">
+            <form class="d-flex mx-auto w-50" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
-
-            <div class="d-flex gap-4 justify-content-start">
-                <button class="btn btn-outline-success" type="submit">Ask</button>
+            <div class="d-flex gap-4 justify-content-start align-items-center">
+                <a class="btn btn-primary" href="{% url 'ask' %}" role="button">Ask</a>
                 <img src="avatar.jpg" alt="Avatar" class="rounded-circle" width="40" height="40">
                 <div>
                     <div class="text-light">

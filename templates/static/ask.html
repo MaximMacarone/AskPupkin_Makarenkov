@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "static/base.html" %}
+{% block content %}
+    <div class="row d-flex mb-5 align-items-center">
+        <div class="col d-flex gap-3 align-items-center">
+            <h2>Ask a question</h2>
+        </div>
+    </div>
+    <div class="row d-flex mb-5 gap-5 w-75">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="title-input">Title</span>
+            <input type="text" class="form-control" placeholder="Enter a question title" aria-label="Title">
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Text</span>
+            <textarea class="form-control" aria-label="Text"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="tags-input">Tags</span>
+            <input type="text" class="form-control" placeholder="Enter tags" aria-label="Tags">
+        </div>
+    </div>
+    <button type="button" class="btn btn-success">Ask</button>
+{% endblock %}
