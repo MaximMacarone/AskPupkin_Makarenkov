@@ -21,5 +21,7 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('/ask', views.ask, name='ask'),
+    path('ask', views.ask, name='ask'),
+    path('question/<int:question_id>', views.question, name='question'),
+    path('*', views.base, name='base'),
 ]

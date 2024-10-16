@@ -12,3 +12,6 @@ def index(request):
 
 def ask(request):
     return render(request, 'static/ask.html')
+
+def question(request, question_id):
+    return render(request, 'static/question.html', {'question': Question.get_by_id(question_id)})
