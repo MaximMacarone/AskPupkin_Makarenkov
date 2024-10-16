@@ -17,7 +17,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex mx-auto w-50" role="search">
+            <form class="d-flex mx-auto w-80" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
 
@@ -28,23 +28,49 @@
                     <div class="text-light">
                         Maxim
                     </div>
-                    <a class="text-light" href="{% url 'base' %}">settings</a>
-                    <a class="text-light" href="{% url 'base' %}">log out</a>
+                    <a class="text-light" href="{% url 'index' %}">settings</a>
+                    <a class="text-light" href="{% url 'index' %}">log out</a>
                 </div>
             </div>
 
         </div>
     </div>
 </nav>
-<main class="d-flex col">
-    {% block content %}
+<main class="container-fluid row m-3">
+        <div class="col-9">
+            {% block content %}
 
-    {% endblock %}
+            {% endblock %}
+        </div>
+        <div class="col">
+            <section class="mb-3">
+                <h2>Popular Tags</h2>
+                <div>
+                    <span class="badge text-bg-primary">Primary</span>
+                    <span class="badge text-bg-secondary">Secondary</span>
+                    <span class="badge text-bg-success">Success</span>
+                    <span class="badge text-bg-danger">Danger</span>
+                    <span class="badge text-bg-warning">Warning</span>
+                    <span class="badge text-bg-info">Info</span>
+                    <span class="badge text-bg-light">Light</span>
+                    <span class="badge text-bg-dark">Dark</span>
+                </div>
+            </section>
+
+            <section>
+                <h2>Best members</h2>
+                <div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#">Member</a></li>
+                        <li class="list-group-item"><a href="#">Member</a></li>
+                        <li class="list-group-item"><a href="#">Member</a></li>
+                        <li class="list-group-item"><a href="#">Member</a></li>
+                        <li class="list-group-item"><a href="#">Member</a></li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
 </main>
-<div class="d-flex col">
-    {% block sidebar %}
-
-    {% endblock %}
-</div>
 </body>
 </html>
