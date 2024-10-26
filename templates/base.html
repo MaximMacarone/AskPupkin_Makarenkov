@@ -5,29 +5,75 @@
     <title>AskPupkin</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
-
+    {% bootstrap_javascript %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between" style="background-color: #172a3a;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">AskPupkin</a>
+        <a class="navbar-brand text-light" href="{% url 'index' %}">AskPupkin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex" role="search">
+            <form class="d-flex mx-auto w-50" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-        </div>
+            <div class="d-flex gap-4 justify-content-start align-items-center">
+                <a class="btn btn-primary" href="{% url 'ask' %}" role="button">Ask</a>
+                <img src="avatar.jpg" alt="Avatar" class="rounded-circle" width="40" height="40">
+                <div>
+                    <div class="text-light">
+                        Maxim
+                    </div>
+                    <a class="text-light" href="{% url 'index' %}">settings</a>
+                    <a class="text-light" href="{% url 'index' %}">log out</a>
+                </div>
+            </div>
 
+        </div>
     </div>
 </nav>
-<div class="container-fluid">
+<main class="container-fluid row m-3">
+    <div class="col-9">
+        {% block content %}
+            <h2>Well, you didn't supposed to be there, go back home</h2>
+        {% endblock %}
+    </div>
+    <div class="col">
+        <section class="mb-3">
+            <h2>Popular Tags</h2>
+            <div class="row align-items-start">
+                <div class="col">
+                    <span class="badge bg-dark">Primary</span>
+                    <span class="badge bg-secondary">Secondary</span>
+                    <span class="badge bg-success">Success</span>
+                    <span class="badge bg-danger">Danger</span>
+                </div>
+                <div class="col">
+                    <span class="badge bg-warning">Warning</span>
+                    <span class="badge bg-info">Info</span>
+                    <span class="badge bg-dark">Light</span>
+                    <span class="badge bg-dark">Dark</span>
+                </div>
+            </div>
+        </section>
 
-</div>
-{% bootstrap_javascript %}
+        <section>
+            <h2>Best members</h2>
+            <div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="#">Member</a></li>
+                    <li class="list-group-item"><a href="#">Member</a></li>
+                    <li class="list-group-item"><a href="#">Member</a></li>
+                    <li class="list-group-item"><a href="#">Member</a></li>
+                    <li class="list-group-item"><a href="#">Member</a></li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+</main>
 </body>
 </html>

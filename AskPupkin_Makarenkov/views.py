@@ -5,7 +5,6 @@ from AskPupkin_Makarenkov.models.question import Question
 
 def base(request):
     return render(request, 'base.html')
-
 def index(request):
     questions = Question.get_mock_questions()
     return render(request, 'index.html', {'questionCards': questions})
