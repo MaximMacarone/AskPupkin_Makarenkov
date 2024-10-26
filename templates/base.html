@@ -8,7 +8,7 @@
     {% bootstrap_javascript %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between" style="background-color: #172a3a;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between sticky-top" style="background-color: #172a3a;">
     <div class="container-fluid">
         <a class="navbar-brand text-light" href="{% url 'index' %}">AskPupkin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -43,34 +43,11 @@
     </div>
     <div class="col">
         <section class="mb-3">
-            <h2>Popular Tags</h2>
-            <div class="row align-items-start">
-                <div class="col">
-                    <span class="badge bg-dark">Primary</span>
-                    <span class="badge bg-secondary">Secondary</span>
-                    <span class="badge bg-success">Success</span>
-                    <span class="badge bg-danger">Danger</span>
-                </div>
-                <div class="col">
-                    <span class="badge bg-warning">Warning</span>
-                    <span class="badge bg-info">Info</span>
-                    <span class="badge bg-dark">Light</span>
-                    <span class="badge bg-dark">Dark</span>
-                </div>
-            </div>
+            {% include 'tagList.html' %}
         </section>
 
         <section>
-            <h2>Best members</h2>
-            <div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#">Member</a></li>
-                    <li class="list-group-item"><a href="#">Member</a></li>
-                    <li class="list-group-item"><a href="#">Member</a></li>
-                    <li class="list-group-item"><a href="#">Member</a></li>
-                    <li class="list-group-item"><a href="#">Member</a></li>
-                </ul>
-            </div>
+            {% include 'memberList.html' %}
         </section>
 
     </div>

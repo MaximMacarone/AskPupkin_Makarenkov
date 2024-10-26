@@ -1,13 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="row d-flex mb-5 align-items-center">
-    <div class="col">
+    <div class="d-flex g-0 align-items-stretch mt-5 mb-5" style="max-width: 1680px;">
+        <div class="col-md-2">
+            <div class="row">
+                <img src="avatar.jpg" class="img-fluid rounded-start" alt="Avatar">
+            </div>
+            <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-start">
+                <div class="col-auto p-0 me-2">{{ question.upvotes }}</div>
+                <div class="col p-0">
+                    <div class="btn-group" role="group" aria-label="VoteButtons">
+                        <button type="button" class="btn btn-light">-</button>
+                        <button type="button" class="btn btn-light">+</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h2>{{ question.title }}</h2>
+        <div class="d-flex flex-row col-md-10">
+            <div class="card-body">
+                <h3 class="card-title">{{ question.title }}</h3>
+                <p class="card-text">{{ question.text }}</p>
+                <div class="d-flex align-items-center gap-4">
+                    <small>Tags:
+                        {% for tag in question.tags %}
+                            <a href="#"><span class="badge bg-secondary">{{ tag }}</span></a>
+                        {% endfor %}
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row d-flex mb-5 align-items-center">
-        <h2>Answers</h2>
-    </div>
+    {% for answer in answers %}
+        <div class="row">
+            {% include 'answerCard.html' with answer=answer %}
+        </div>
+    {% endfor %}
+    <div class="row"></div>
 {% endblock %}
