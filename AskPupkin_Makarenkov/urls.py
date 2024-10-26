@@ -16,12 +16,14 @@ Including another URLconf
 """
 from AskPupkin_Makarenkov import views
 from django.contrib import admin
-from django.urls import path
+from django.conf.urls import handler404
+from django.urls import path, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('ask', views.ask, name='ask'),
     path('question/<int:question_id>', views.question, name='question'),
-    path('*', views.base, name='base'),
+    path('login', views.login, name='login'),
+    path('signup', views.signup, name='signup'),
 ]
