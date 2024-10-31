@@ -1,6 +1,3 @@
-from django.conf.urls.static import static
-
-
 class Answer:
     def __init__(self, iden, author, upvotes, text, is_correct, question):
         self._id = iden

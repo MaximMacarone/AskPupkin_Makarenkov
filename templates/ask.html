@@ -5,18 +5,30 @@
             <h2>Ask a question</h2>
         </div>
     </div>
-    <div class="row d-flex mb-5 gap-5 w-75">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="title-input">Title</span>
-            <input type="text" class="form-control" placeholder="Enter a question title" aria-label="Title">
+    <div class="row d-flex mb-5 gap-5 w-75 justify-content-center">
+        <div class="row">
+            <div class="col-1">
+                <span class="input-group-text" id="title-input">Title</span>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Enter a question title" aria-label="Title">
+            </div>
         </div>
-        <div class="input-group">
-            <span class="input-group-text">Text</span>
-            <textarea class="form-control" aria-label="Text"></textarea>
+        <div class="row">
+            <div class="col-1">
+                <span class="input-group-text">Text</span>
+            </div>
+            <div class="col">
+                <textarea class="form-control" aria-label="Text" rows="15"></textarea>
+            </div>
         </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="tags-input">Tags</span>
-            <input type="text" class="form-control" placeholder="Enter tags" aria-label="Tags">
+        <div class="row mb-3">
+            <div class="col-1">
+                <span class="input-group-text" id="tags-input">Tags</span>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Enter tags" aria-label="Tags">
+            </div>
         </div>
     </div>
     <button type="button" class="btn btn-success">Ask</button>

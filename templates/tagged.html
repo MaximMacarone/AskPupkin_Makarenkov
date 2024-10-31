@@ -2,8 +2,7 @@
 {% block content %}
     <div class="row d-flex mb-5 align-items-center">
         <div class="col d-flex gap-3 align-items-center">
-            <h2>New questions</h2>
-            <a href="{% url 'index' %}">Hot questions</a>
+            <h2>Tag: {{ tag_name }}</h2>
         </div>
     </div>
     {% for question in questionCards %}

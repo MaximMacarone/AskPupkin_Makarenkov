@@ -75,3 +75,13 @@ def get_by_id(question_id):
     for question in mock_questions:
         if question.id() == question_id:
             return question
+
+def get_by_tag(question_tag):
+    result = []
+    for question in mock_questions:
+        for tag in question.tags():
+            print(tag)
+            if tag == question_tag:
+                result.append(question)
+                break
+    return result
