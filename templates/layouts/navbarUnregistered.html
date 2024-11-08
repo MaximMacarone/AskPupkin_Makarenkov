@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>AskPupkin</title>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-
-</head>
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+{% block navbar %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-between sticky-top" style="background-color: #172a3a;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">AskPupkin</a>
+        <a class="navbar-brand text-light" href="{% url 'index' %}">AskPupkin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex" role="search">
+            <form class="d-flex mx-auto w-50" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
+            <div class="d-flex gap-4 justify-content-start align-items-center">
+                <a class="text-light" href="{% url 'login' %}">Log in</a>
+                <a class="text-light" href="{% url 'signup' %}">Register</a>
+            </div>
         </div>
-
     </div>
 </nav>
-<div class="container-fluid">
-
-</div>
-{% bootstrap_javascript %}
-</body>
-</html>
+{% endblock %}

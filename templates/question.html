@@ -1,0 +1,50 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="d-flex g-0 align-items-stretch mt-5 mb-5" style="max-width: 1680px;">
+        <div class="col-md-2">
+            <div class="row">
+                <img src="avatar.jpg" class="img-fluid rounded-start" alt="Avatar">
+            </div>
+            <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-start">
+                <div class="col-auto p-0 me-2">{{ question.upvotes }}</div>
+                <div class="col p-0">
+                    <div class="btn-group" role="group" aria-label="VoteButtons">
+                        <button type="button" class="btn btn-light">-</button>
+                        <button type="button" class="btn btn-light">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row col-md-10">
+            <div class="card-body">
+                <h3 class="card-title">{{ question.title }}</h3>
+                <p class="card-text">{{ question.text }}</p>
+                <div class="d-flex align-items-center gap-4">
+                    <small>Tags:
+                        {% for tag in question.tags %}
+                            <a href="{% url 'tagged' tag %}"><span class="badge bg-secondary">{{ tag }}</span></a>
+                        {% endfor %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-5 row d-flex">
+        <div class="col-7">
+            <textarea class=" w-100 form-control" aria-label="MyAnswer" rows="8"
+                      placeholder="Enter your answer here..."></textarea>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-success">Answer</button>
+        </div>
+    </div>
+    {% for answer in answers %}
+        <div class="row">
+            {% include 'layouts/answerCard.html' with answer=answer %}
+        </div>
+    {% endfor %}
+    {% block paginator %}
+        {% include 'layouts/paginator.html' %}
+    {% endblock %}
+{% endblock %}
