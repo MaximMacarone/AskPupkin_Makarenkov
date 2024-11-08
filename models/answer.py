@@ -49,6 +49,86 @@ mock_answers = [
             iden=3,
             author='Olga',
             upvotes=5,
+            text='На Windows обязательно проверьте галочку "Add Python to PATH" при установке, чтобы не было проблем с командной строкой.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=4,
+            author='Alexey',
+            upvotes=3,
+            text='Для macOS лучше использовать Homebrew для установки Python, так как он управляет зависимостями и упрощает обновление.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=5,
+            author='Dmitry',
+            upvotes=6,
+            text='На Windows рекомендую также установить Visual Studio Code и выбрать интеграцию с Python во время установки.',
+            is_correct=True,
+            question=1
+        ),
+        Answer(
+            iden=6,
+            author='Elena',
+            upvotes=1,
+            text='Для macOS можно скачать Python с официального сайта. После установки перезапустите терминал для обновления пути.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=7,
+            author='Sergey',
+            upvotes=7,
+            text='На Mac можно установить Python с помощью Homebrew, а для Windows — загрузить установочный файл с сайта python.org.',
+            is_correct=True,
+            question=1
+        ),
+        Answer(
+            iden=8,
+            author='Nina',
+            upvotes=3,
+            text='Если вы используете Mac, советую проверить текущую версию Python перед установкой, так как он часто предустановлен.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=9,
+            author='Pavel',
+            upvotes=4,
+            text='На Windows, чтобы убедиться, что Python установлен, введите `python --version` в командной строке после установки.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=10,
+            author='Marina',
+            upvotes=8,
+            text='Для обеих систем проще всего следовать инструкциям на сайте Python, особенно для новичков.',
+            is_correct=True,
+            question=1
+        ),
+        Answer(
+            iden=11,
+            author='Roman',
+            upvotes=2,
+            text='На Windows можно также использовать установщик Anaconda, если вам требуется Python для анализа данных.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=12,
+            author='Liza',
+            upvotes=5,
+            text='После установки Python на Windows обязательно перезагрузите систему для корректной работы PATH.',
+            is_correct=False,
+            question=1
+        ),
+        Answer(
+            iden=3,
+            author='Olga',
+            upvotes=5,
             text='Объектно-ориентированное программирование включает понятия классов, объектов, наследования, инкапсуляции и полиморфизма. Основная идея — представление данных в виде объектов.',
             is_correct=True,
             question=2

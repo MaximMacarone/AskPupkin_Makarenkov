@@ -3,11 +3,11 @@
 {% block content %}
     <div class="row d-flex mb-5 align-items-center">
         <div class="col d-flex gap-3 align-items-center">
-            <h2>New questions</h2>
-            <a href="{% url 'hot' %}">Hot questions</a>
+            <h2>Hot questions</h2>
+            <a href="{% url 'index' %}">All questions</a>
         </div>
     </div>
-    {% for question in questionCards %}
+    {% for question in questions %}
         <div class="row gap-3 mx-auto">
             {% include 'layouts/questionCard.html' with question=question %}
         </div>

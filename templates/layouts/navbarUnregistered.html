@@ -12,17 +12,9 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
             <div class="d-flex gap-4 justify-content-start align-items-center">
-                <a class="btn btn-primary" href="{% url 'ask' %}" role="button">Ask</a>
-                <img src="avatar.jpg" alt="Avatar" class="rounded-circle" width="40" height="40">
-                <div>
-                    <div class="text-light">
-                        Dr.Pepper
-                    </div>
-                    <a class="text-light" href="{% url 'settings' %}">Settings</a>
-                    <a class="text-light" href="{% url 'index' %}">log out</a>
-                </div>
+                <a class="text-light" href="{% url 'login' %}">Log in</a>
+                <a class="text-light" href="{% url 'signup' %}">Register</a>
             </div>
-
         </div>
     </div>
 </nav>

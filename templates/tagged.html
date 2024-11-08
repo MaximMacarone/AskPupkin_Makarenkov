@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
+{% load static %}
 {% block content %}
     <div class="row d-flex mb-5 align-items-center">
         <div class="col d-flex gap-3 align-items-center">
@@ -7,24 +8,10 @@
     </div>
     {% for question in questionCards %}
         <div class="row gap-3 mx-auto">
-            {% include 'questionCard.html' with question=question %}
+            {% include 'layouts/questionCard.html' with question=question %}
         </div>
     {% endfor %}
-    <nav class="mt-3" aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    {% block paginator %}
+        {% include 'layouts/paginator.html' %}
+    {% endblock %}
 {% endblock %}
