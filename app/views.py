@@ -40,6 +40,7 @@ def settings(request):
     return render(request, 'settings.html', context={'user': mock_user})
 
 def hot(request):
-    questions = mock_questions.__reversed__()
+    questions = mock_questions
+    questions.reverse()
     page = paginate(request, questions)
     return render(request, 'hot.html', context={'questions': page.object_list, "page": page})
