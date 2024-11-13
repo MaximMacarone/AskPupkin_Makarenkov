@@ -1,9 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from app import models
-from models.question import get_by_id, get_by_tag
-from models.answer import get_by_question_id
-from models.question import mock_questions
 from models.user import mock_user
 from app.pagination import paginate
 
@@ -12,16 +9,17 @@ def index(request):
     page = paginate(request, questions)
     return render(request, 'index.html', {'questionCards': page.object_list, "page": page})
 
+def page_not_found(request, exception):
+    return render(request, '404page.html', status=404)
 
 def ask(request):
     return render(request, 'ask.html')
 
-
 def question(request, question_id):
-    question = get_by_id(question_id)
-    answers = get_by_question_id(question_id)
+    this_question = get_object_or_404(models.Question, pk=question_id)
+    answers = this_question.answers.all()
     page = paginate(request, answers)
-    return render(request, 'question.html', {'question': question, 'answers': page.object_list, "page": page})
+    return render(request, 'question.html', {'question': this_question, 'answers': page.object_list, "page": page})
 
 
 def login(request):
@@ -32,12 +30,12 @@ def signup(request):
     return render(request, 'signup.html')
 
 def tagged(request, tag_name):
-    questions = get_by_tag(tag_name)
+    this_tag = get_object_or_404(models.Tag, name=tag_name)
+    questions = models.Question.objects.tagged(this_tag.name).all()
     page = paginate(request, questions)
     return render(request, 'tagged.html', context={'tag_name': tag_name, 'questionCards': page.object_list, "page": page})
 
 def settings(request):
-    print(mock_user)
     return render(request, 'settings.html', context={'user': mock_user})
 
 def hot(request):

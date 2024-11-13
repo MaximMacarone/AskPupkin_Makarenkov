@@ -3,10 +3,10 @@
         <div class="d-flex row g-0 align-items-center">
             <div class="col-md-2">
                 <div class="row">
-                    <img src="avatar.jpg" class="img-fluid rounded-start" alt="Avatar">
+                    <img src="{{ answer.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="None">
                 </div>
                 <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-between">
-                    <div class="col p-0 text-center">{{ answer.upvotes }}</div>
+                    <div class="col p-0 text-center">{{ answer.likes.count }}</div>
                     <div class="col p-0">
                         <div class="btn-group" role="group" aria-label="VoteButtons">
                             <button type="button" class="btn btn-light">-</button>
@@ -17,7 +17,7 @@
             </div>
             <div class="d-flex flex-row col-md-10">
                 <div class="card-body">
-                    <p class="card-text">{{ answer.text }}</p>
+                    <p class="card-text">{{ answer.content }}</p>
                     <div class="d-flex align-items-center gap-1">
                         {% if answer.is_correct %}
                             <i class="bi bi-check2-square"></i>Correct answer!

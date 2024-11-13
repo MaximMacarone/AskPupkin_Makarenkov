@@ -5,18 +5,16 @@
     <div class="row">
         <div class="col-auto">
             <div class="d-inline-flex flex-column gap-1 align-items-start">
-                <a href="{% url 'tagged' "iOS" %}"><span class="badge bg-dark">ios</span></a>
-                <a href="{% url 'tagged' "VK" %}"><span class="badge bg-secondary">vk</span></a>
-                <a href="{% url 'tagged' "swift" %}"><span class="badge bg-success">swift</span></a>
-                <a href="{% url 'tagged' "python" %}"><span class="badge bg-danger">python</span></a>
+                {% for tag in tags.all|slice:":4" %}
+                    <a href="{% url 'tagged' tag.name %}"><span class="badge bg-warning">{{ tag.name }}</span></a>
+                {% endfor %}
             </div>
         </div>
         <div class="col-auto">
             <div class="d-inline-flex flex-column gap-1 align-items-start">
-                <a href="{% url 'tagged' "разработка" %}"><span class="badge bg-warning">разработка</span></a>
-                <a href="{% url 'tagged' "git" %}"><span class="badge bg-info">git</span></a>
-                <a href="{% url 'tagged' "oop" %}"><span class="badge bg-light text-dark">oop</span></a>
-                <a href="{% url 'tagged' "мемы с котами" %}"><span class="badge bg-dark">Мемы с котами</span></a>
+                {% for tag in tags.all|slice:"4:" %}
+                    <a href="{% url 'tagged' tag.name %}"><span class="badge bg-warning">{{ tag.name }}</span></a>
+                {% endfor %}
             </div>
         </div>
     </div>

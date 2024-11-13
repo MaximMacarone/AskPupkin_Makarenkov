@@ -3,7 +3,7 @@
         <div class="d-flex row g-0 align-items-center">
             <div class="col-md-2">
                 <div class="row">
-                    <img src="avatar.jpg" class="img-fluid rounded-start" alt="Avatar">
+                    <img src="{{ question.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="Avatar">
                 </div>
                 <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-between">
                     <div class="col p-0 text-center">{{ question.likes_count|default:"0" }}</div>
@@ -20,7 +20,7 @@
                     <h5 class="card-title"><a href="{% url 'question' question.id %}">{{ question.title }}</a></h5>
                     <p class="card-text">{{ question.text }}</p>
                     <div class="d-flex align-items-center gap-4">
-                        <small class="text-body-secondary"><a class="card-text" href="{% url 'question' question.id %}">answer (3)</a></small>
+                        <small class="text-body-secondary"><a class="card-text" href="{% url 'question' question.id %}">answer ({{ question.answers.count }})</a></small>
                         <small>Tags:
                             {% for tag in question.tags.all %}
                                 <a href="{% url 'tagged' tag %}"><span class="badge bg-secondary">{{ tag.name }}</span></a>

@@ -4,10 +4,10 @@
     <div class="d-flex g-0 align-items-stretch mt-5 mb-5" style="max-width: 1680px;">
         <div class="col-md-2">
             <div class="row">
-                <img src="avatar.jpg" class="img-fluid rounded-start" alt="Avatar">
+                <img src="{{ question.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="None">
             </div>
             <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-start">
-                <div class="col-auto p-0 me-2">{{ question.upvotes }}</div>
+                <div class="col-auto p-0 me-2">{{ question.likes.count }}</div>
                 <div class="col p-0">
                     <div class="btn-group" role="group" aria-label="VoteButtons">
                         <button type="button" class="btn btn-light">-</button>
@@ -22,7 +22,7 @@
                 <p class="card-text">{{ question.text }}</p>
                 <div class="d-flex align-items-center gap-4">
                     <small>Tags:
-                        {% for tag in question.tags %}
+                        {% for tag in question.tags.all %}
                             <a href="{% url 'tagged' tag %}"><span class="badge bg-secondary">{{ tag }}</span></a>
                         {% endfor %}
                     </small>
