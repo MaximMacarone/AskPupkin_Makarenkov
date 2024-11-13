@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=maxim
+      - POSTGRES_USER=maxim
+    volumes:
+      - ./postgresData:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  django_app:
+    container_name: django_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/opt/app/
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./env/django.env
+    links:
+      - postgres

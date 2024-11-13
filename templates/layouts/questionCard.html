@@ -6,7 +6,7 @@
                     <img src="avatar.jpg" class="img-fluid rounded-start" alt="Avatar">
                 </div>
                 <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-between">
-                    <div class="col p-0 text-center">{{ question.upvotes }}</div>
+                    <div class="col p-0 text-center">{{ question.likes_count|default:"0" }}</div>
                     <div class="col p-0">
                         <div class="btn-group" role="group" aria-label="VoteButtons">
                             <button type="button" class="btn btn-light">-</button>
@@ -22,8 +22,8 @@
                     <div class="d-flex align-items-center gap-4">
                         <small class="text-body-secondary"><a class="card-text" href="{% url 'question' question.id %}">answer (3)</a></small>
                         <small>Tags:
-                            {% for tag in question.tags %}
-                                <a href="{% url 'tagged' tag %}"><span class="badge bg-secondary">{{ tag }}</span></a>
+                            {% for tag in question.tags.all %}
+                                <a href="{% url 'tagged' tag %}"><span class="badge bg-secondary">{{ tag.name }}</span></a>
                             {% endfor %}
                         </small>
                     </div>
