@@ -10,4 +10,5 @@ urlpatterns = [
     path('tag/<str:tag_name>', views.tagged, name='tagged'),
     path('settings', views.settings, name='settings'),
     path('hot', views.hot, name='hot'),
+    path('logout', views.logout, name='logout'),
 ]
