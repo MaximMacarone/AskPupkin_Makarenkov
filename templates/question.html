@@ -8,17 +8,26 @@
                 <img src="{{ question.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="None">
             </div>
             <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-start">
-                <div class="col-auto p-0 me-2">{{ question.likes.count }}</div>
+                    <div class="col-auto p-0 me-2">
+                        {% if not request.user.is_authenticated %}
+                        Likes: 
+                        {% endif %}
+                        <span class="question-likes-count">
+                            {{ question.total_count|default:0 }}
+                        </span>
+                    </div>
+                {% if request.user.is_authenticated %}
                 <div class="col p-0">
                     <div class="btn-group" role="group" aria-label="VoteButtons">
-                        <button type="button" class="btn btn-light">-</button>
-                        <button type="button" class="btn btn-light">+</button>
+                        <button type="button" class="btn btn-light question-dislike">-</button>
+                        <button type="button" class="btn btn-light question-like">+</button>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="d-flex flex-row col-md-10">
-            <div class="card-body">
+            <div class="card-body question-body" data-question-id="{{ question.id }}">
                 <h3 class="card-title">{{ question.title }}</h3>
                 <p class="card-text">{{ question.body }}</p>
                 <div class="d-flex align-items-center gap-4">
@@ -43,7 +52,7 @@
         {% endbuttons %}
     </form>
     {% else %}
-        Sign in to answer questions
+        Sign in to answer and like questions
     {% endif %}
 
     </div>
@@ -55,4 +64,8 @@
     {% block paginator %}
         {% include 'layouts/paginator.html' %}
     {% endblock %}
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/question.js' %}"></script>
+    <script src="{% static 'js/answer-mark.js' %}"></script>
 {% endblock %}

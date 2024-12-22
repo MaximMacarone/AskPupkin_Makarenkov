@@ -33,10 +33,30 @@ class Tag(models.Model):
 
 class QuestionManager(models.Manager):
     def with_likes_count(self):
-        return self.annotate(likes_count=models.Count('likes'))
+        return self.annotate(likes_count=models.Count('likes', filter=models.Q(likes__type=QuestionLike.like)),
+                             dislikes_count=models.Count('likes', filter=models.Q(likes__type=QuestionLike.dislike)),
+                             total_count=models.Sum('likes__type')
+                             )
+
+    def get_total_like(self, question_id):
+        question = self.with_likes_count().get(pk=question_id)
+        print(question.total_count)
+        return question.total_count
+
+    def check_question_like(self, question_id, user_id):
+        question = self.with_likes_count().get(pk=question_id)
+        like_instance = QuestionLike.objects.filter(question=question, user_id=user_id).first()
+
+        if like_instance:
+            if like_instance.type == QuestionLike.like:
+                return 'like'
+            elif like_instance.type == QuestionLike.dislike:
+                return 'dislike'
+        return None
+
 
     def best(self):
-        return self.with_likes_count().order_by('-likes_count')
+        return self.with_likes_count().order_by('-total_count')
 
     def newest(self):
         return self.with_likes_count().order_by('-created_at')
@@ -46,6 +66,18 @@ class QuestionManager(models.Manager):
 
     def get_question(self, question_id):
         return self.get(question_id=question_id)
+
+
+class AnswerManager(models.Manager):
+    def with_likes_count(self):
+        return self.annotate(likes_count=models.Count('likes', filter=models.Q(likes__type=AnswerLike.like)),
+                             dislikes_count=models.Count('likes', filter=models.Q(likes__type=AnswerLike.dislike)),
+                             total_count=models.Sum('likes__type')
+                             )
+
+    def get_total_like(self, answer_id):
+        answer = self.with_likes_count().get(pk=answer_id)
+        return answer.total_count
 
 
 class Question(models.Model):
@@ -68,27 +100,45 @@ class Answer(models.Model):
     is_correct = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = AnswerManager()
 
     def __str__(self):
         return f"Answer by {self.author.username} on {self.question.title}"
 
 class QuestionLike(models.Model):
+    like = 1
+    dislike = -1
+    like_type_choices = [
+        (like, 'like'),
+        (dislike, 'dislike'),
+    ]
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_likes')
+    type = models.IntegerField(choices=like_type_choices, default=like)
 
     class Meta:
         unique_together = ('question', 'user')
 
     def __str__(self):
-        return f"Like by {self.user.username} on {self.question.title}"
+        return f"{self.get_type_display()} by {self.user.username} on {self.question.title}"
 
 
 class AnswerLike(models.Model):
+    like = 1
+    dislike = -1
+    like_type_choices = [
+        (like, 'like'),
+        (dislike, 'dislike'),
+    ]
+
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_likes')
+    type = models.IntegerField(choices=like_type_choices, default=like)
 
     class Meta:
         unique_together = ('answer', 'user')
 
     def __str__(self):
-        return f"Like by {self.user.username} on {self.answer.question.title} answer"
+        return f"{self.get_type_display()} by {self.user.username} on {self.answer.question.title} answer"
+

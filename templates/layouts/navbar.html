@@ -14,7 +14,7 @@
                 </form>
                 <div class="d-flex gap-4 justify-content-start align-items-center">
                     <a class="btn btn-primary" href="{% url 'ask' %}" role="button">Ask</a>
-                    <img src="{{ request.user.profile.avatar }}" alt="Avatar" class="rounded-circle" width="40" height="40">
+                    <img src="{{ request.user.profile.avatar.url }}" alt="Avatar" class="rounded-circle" width="40" height="40">
                     <div>
                         <div class="text-light">
                             {{ request.user.profile.nickname }}

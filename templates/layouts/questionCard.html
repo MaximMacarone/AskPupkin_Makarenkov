@@ -1,18 +1,27 @@
 {% block questionCard %}
-    <div class="card mb-3 pt-2 pb-1" style="max-width: 840px;">
+    <div class="card mb-3 pt-2 pb-1" data-question-id="{{ question.id }}" style="max-width: 840px;">
         <div class="d-flex row g-0 align-items-center">
             <div class="col-md-2">
                 <div class="row">
                     <img src="{{ question.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="Avatar">
                 </div>
                 <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-between">
-                    <div class="col p-0 text-center">{{ question.likes_count|default:"0" }}</div>
+                    <div class="col p-0 text-center">
+                        {% if not request.user.is_authenticated %}
+                        Likes:
+                        {% endif %}
+                        <span class="likes-count">
+                            {{ question.total_count|default:0 }}
+                        </span>
+                    </div>
+                    {% if request.user.is_authenticated %}
                     <div class="col p-0">
                         <div class="btn-group" role="group" aria-label="VoteButtons">
-                            <button type="button" class="btn btn-light">-</button>
-                            <button type="button" class="btn btn-light">+</button>
+                            <button type="button" class="btn btn-light dislike-button">-</button>
+                            <button type="button" class="btn btn-light like-button">+</button>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="d-flex flex-row col-md-10">

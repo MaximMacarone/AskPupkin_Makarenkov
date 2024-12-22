@@ -1,11 +1,18 @@
+import json
+
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 from app import models
 from app.forms import LoginForm, ProfileForm, UserForm, EditProfileForm, EditUserForm, AskQuestionForm, AddAnswerForm
+from app.models import QuestionLike, AnswerLike
 from app.pagination import paginate
+from app.models import Question, Answer
+
 
 def index(request):
     questions = models.Question.objects.newest().all()
@@ -33,8 +40,8 @@ def ask(request):
 
 
 def question(request, question_id):
-    this_question = get_object_or_404(models.Question, pk=question_id)
-    answers = this_question.answers.all()
+    this_question = get_object_or_404(models.Question.objects.with_likes_count().all(), pk=question_id)
+    answers = this_question.answers.with_likes_count().all()
     page = paginate(request, answers)
     paginator = page.paginator
     if request.method == 'POST':
@@ -123,3 +130,96 @@ def logout(request):
     previous_page = request.META.get('HTTP_REFERER', reverse('index'))
     return redirect(previous_page)
 
+@login_required(login_url='login')
+@require_POST
+def like_question(request, question_id):
+    body = json.loads(request.body)
+
+    user = request.user
+    question = get_object_or_404(models.Question, pk=question_id)
+
+    if body.get('type') == 'like':
+        existing_like = QuestionLike.objects.filter(user=user, question=question, type=QuestionLike.like).first()
+        existing_dislike = QuestionLike.objects.filter(user=user, question=question, type=QuestionLike.dislike).first()
+
+        if existing_like:
+            existing_like.delete()
+        elif existing_dislike:
+            existing_dislike.delete()
+            QuestionLike.objects.create(user=user, question=question, type=QuestionLike.like)
+        else:
+            QuestionLike.objects.create(user=user, question=question, type=QuestionLike.like)
+
+    elif body.get('type') == 'dislike':
+        existing_like = QuestionLike.objects.filter(user=user, question=question, type=QuestionLike.like).first()
+        existing_dislike = QuestionLike.objects.filter(user=user, question=question, type=QuestionLike.dislike).first()
+
+        if existing_like:
+            existing_like.delete()
+            QuestionLike.objects.create(user=user, question=question, type=QuestionLike.dislike)
+        elif existing_dislike:
+            existing_dislike.delete()
+        else:
+            QuestionLike.objects.create(user=user, question=question, type=QuestionLike.dislike)
+
+    likes_count = Question.objects.get_total_like(question_id)
+
+    return JsonResponse({
+        'likes_count': likes_count,
+    })
+
+@login_required(login_url='login')
+@require_POST
+def like_answer(request, answer_id):
+    body = json.loads(request.body)
+
+    user = request.user
+    answer = get_object_or_404(models.Answer, pk=answer_id)
+
+    if body.get('type') == 'like':
+        existing_like = AnswerLike.objects.filter(user=user, answer=answer, type=AnswerLike.like).first()
+        existing_dislike = AnswerLike.objects.filter(user=user, answer=answer, type=AnswerLike.dislike).first()
+
+        if existing_like:
+            existing_like.delete()
+        elif existing_dislike:
+            existing_dislike.delete()
+            AnswerLike.objects.create(user=user, answer=answer, type=AnswerLike.like)
+        else:
+            AnswerLike.objects.create(user=user, answer=answer, type=AnswerLike.like)
+
+    elif body.get('type') == 'dislike':
+        existing_like = AnswerLike.objects.filter(user=user, answer=answer, type=AnswerLike.like).first()
+        existing_dislike = AnswerLike.objects.filter(user=user, answer=answer, type=AnswerLike.dislike).first()
+
+        if existing_like:
+            existing_like.delete()
+            AnswerLike.objects.create(user=user, answer=answer, type=AnswerLike.dislike)
+        elif existing_dislike:
+            existing_dislike.delete()
+        else:
+            AnswerLike.objects.create(user=user, answer=answer, type=AnswerLike.dislike)
+
+    likes_count = Answer.objects.get_total_like(answer_id)
+
+    return JsonResponse({
+        'likes_count': likes_count,
+    })
+
+
+@login_required(login_url='login')
+@require_POST
+def mark_as_correct(request, answer_id):
+    if request.method == "POST":
+        answer = get_object_or_404(Answer, id=answer_id)
+        question = answer.question
+
+        if request.user != question.author:
+            return JsonResponse({'success': False, 'error': 'Not authorized'}, status=403)
+
+        answer.is_correct = not answer.is_correct
+        answer.save()
+
+        return JsonResponse({'success': True, 'is_correct': answer.is_correct})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)

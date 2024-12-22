@@ -11,4 +11,7 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('hot', views.hot, name='hot'),
     path('logout', views.logout, name='logout'),
+    path('<int:question_id>/like_question', views.like_question, name='like_question'),
+    path('like_answer/<int:answer_id>', views.like_answer, name='like_answer'),
+    path('answers/<int:answer_id>/mark_as_correct/', views.mark_as_correct, name='mark_as_correct'),
 ]
