@@ -9,7 +9,7 @@ class ProfileManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, default='avatars/default.jpg')
+    avatar = models.ImageField(upload_to='.', blank=True, null=True, default='./default.jpg')
     nickname = models.CharField(max_length=50)
 
     objects = ProfileManager()

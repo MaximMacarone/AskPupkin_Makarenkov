@@ -1,26 +1,32 @@
+{% load static %}
 {% block questionCard %}
     <div class="card mb-3 pt-2 pb-1" data-question-id="{{ question.id }}" style="max-width: 840px;">
         <div class="d-flex row g-0 align-items-center">
             <div class="col-md-2">
                 <div class="row">
-                    <img src="{{ question.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="Avatar">
+                    {% if request.user.profile.avatar %}
+                        <img src="{{ question.author.profile.avatar.url }}" alt="Avatar" class="img-fluid rounded-start">
+                    {% else %}
+                        <img src="{% static "default.jpg" %}" alt="Default Avatar" class="img-fluid rounded-start">
+                    {% endif %}
+                    {#                    <img src="{{ question.author.profile.avatar.url|default:"none.jpg" }}" class="img-fluid rounded-start" alt="Avatar">#}
                 </div>
                 <div class="row px-3 pt-2 pb-1 gap-2 align-items-center justify-content-between">
                     <div class="col p-0 text-center">
                         {% if not request.user.is_authenticated %}
-                        Likes:
+                            Likes:
                         {% endif %}
                         <span class="likes-count">
                             {{ question.total_count|default:0 }}
                         </span>
                     </div>
                     {% if request.user.is_authenticated %}
-                    <div class="col p-0">
-                        <div class="btn-group" role="group" aria-label="VoteButtons">
-                            <button type="button" class="btn btn-light dislike-button">-</button>
-                            <button type="button" class="btn btn-light like-button">+</button>
+                        <div class="col p-0">
+                            <div class="btn-group" role="group" aria-label="VoteButtons">
+                                <button type="button" class="btn btn-light dislike-button">-</button>
+                                <button type="button" class="btn btn-light like-button">+</button>
+                            </div>
                         </div>
-                    </div>
                     {% endif %}
                 </div>
             </div>
