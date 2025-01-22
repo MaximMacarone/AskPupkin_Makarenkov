@@ -6,14 +6,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.forms.models import model_to_dict
+from django.core.serializers.json import DjangoJSONEncoder
 
+from AskPupkin_Makarenkov.settings import CENTRIFUGO_API_KEY, CENTRIFUGO_API_URL
 from app import models
 from app.forms import LoginForm, ProfileForm, UserForm, EditProfileForm, EditUserForm, AskQuestionForm, AddAnswerForm
 from app.models import QuestionLike, AnswerLike
 from app.pagination import paginate
 from app.models import Question, Answer
 
-
+from cent import Client, PublishRequest
 def index(request):
     questions = models.Question.objects.newest().all()
     page = paginate(request, questions)
@@ -51,6 +54,19 @@ def question(request, question_id):
             answer.author = request.user
             answer.question = this_question
             answer.save()
+
+            dict_answer = model_to_dict(answer)
+            answer_json = json.dumps(dict_answer, cls=DjangoJSONEncoder)
+
+            api_url = CENTRIFUGO_API_URL
+            api_key = CENTRIFUGO_API_KEY
+
+            try:
+                client = Client(api_url=api_url, api_key=api_key)
+                request = PublishRequest(channel=str(question_id), data=json.loads(answer_json))
+                result = client.publish(request)
+            except Exception as e:
+                print(f"Error while publishing to Centrifugo: {e}")
 
             last_page_number = paginator.num_pages
             return redirect(f"{reverse('question', args=[question_id])}?page={last_page_number}#answer-{answer.id}")

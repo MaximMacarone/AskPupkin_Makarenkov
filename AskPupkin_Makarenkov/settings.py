@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'app.context_processors.tag_list',
                 'app.context_processors.member_list',
+                'app.context_processors.get_centrifugo_info',
             ],
         },
     },
@@ -138,3 +139,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+CENTRIFUGO_SECRET_KEY = os.environ.get("CENTRIFUGO_SECRET_KEY", default="my_secret")
+CENTRIFUGO_WS_URL = os.environ.get("CENTRIFUGO_WS_URL", default="ws://localhost:9000/connection/websocket")
+
+CENTRIFUGO_API_KEY = os.environ.get("CENTRIFUGO_API_KEY", default="d7627bb6-2292-4911-82e1-615c0ed3eebb")
+CENTRIFUGO_API_URL = os.environ.get("CENTRIFUGO_API_URL", default="http://localhost:9000/api")

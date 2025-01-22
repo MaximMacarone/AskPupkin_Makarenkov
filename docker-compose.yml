@@ -13,7 +13,7 @@ services:
 
   django_app:
     container_name: django_app
-    image: django-app
+    build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/opt/app/
@@ -23,20 +23,6 @@ services:
       - ./env/django.env
     depends_on:
       - postgres
-
-
-  gunicorn:
-    container_name: gunicorn_server
-    build: .
-    command: gunicorn --config gunicorn/gunicorn.conf.py AskPupkin_Makarenkov.wsgi
-    env_file:
-      - ./env/django.env
-    volumes:
-      - .:/opt/app/
-    ports:
-      - '8081:8081'
-    depends_on:
-      - django_app
 
   nginx:
     image: nginx
@@ -50,4 +36,15 @@ services:
       - ./uploads:/usr/share/uploads:ro
     restart: unless-stopped
 
-
+  centrifugo:
+    container_name: centrifugo
+    image: centrifugo/centrifugo:v6
+    volumes:
+      - ./centrifugo/config.json:/centrifugo/config.json
+    command: centrifugo -c config.json
+    ports:
+      - '9000:9000'
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
