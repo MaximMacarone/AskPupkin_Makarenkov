@@ -55,18 +55,22 @@ def question(request, question_id):
             answer.question = this_question
             answer.save()
 
-            dict_answer = model_to_dict(answer)
-            answer_json = json.dumps(dict_answer, cls=DjangoJSONEncoder)
+            data = {
+                "question_id": answer.question.id,
+                "answer_id": answer.id,
+                "avatar_url": answer.author.profile.avatar.url,
+                "text_content": answer.content,
+                "votes_total": 0
+            }
 
             api_url = CENTRIFUGO_API_URL
             api_key = CENTRIFUGO_API_KEY
 
-            try:
-                client = Client(api_url=api_url, api_key=api_key)
-                request = PublishRequest(channel=str(question_id), data=json.loads(answer_json))
-                result = client.publish(request)
-            except Exception as e:
-                print(f"Error while publishing to Centrifugo: {e}")
+            json_data = json.dumps(data)
+
+            client = Client(api_url=api_url, api_key=api_key)
+            request = PublishRequest(channel=str(question_id), data=json.loads(json_data))
+            result = client.publish(request)
 
             last_page_number = paginator.num_pages
             return redirect(f"{reverse('question', args=[question_id])}?page={last_page_number}#answer-{answer.id}")

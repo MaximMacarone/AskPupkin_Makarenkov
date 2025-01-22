@@ -81,7 +81,7 @@
                             Likes: 
                             {% endif %}
                             <span class="likes-count">
-                                %% answer_count %%
+                                %% likes_count %%
                             </span>
                         </div>
                     {% if request.user.is_authenticated %}
@@ -96,7 +96,7 @@
             </div>
             <div class="d-flex flex-row col-md-10">
                 <div class="card-body">
-                    <p class="card-text">%% content %%</p>
+                    <p class="car d-text">%% content %%</p>
                     <div class="d-flex align-items-center gap-1">
                         {% if request.user == question.author %}
                             <button class="btn btn-sm btn-outline-success mark-correct-button">
